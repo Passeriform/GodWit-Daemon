@@ -1,0 +1,23 @@
+[package]
+name = "godwit-daemon"
+description = "A daemon runner for godwit."
+version = "0.1.0"
+authors = ["Utkarsh Bhardwaj (Passeriform) <passeriform.ub@gmail.com>"]
+readme = "README.md"
+license = "MIT"
+repository = "https://github.com/Passeriform/GodWit-Daemon"
+homepage = "https://www.passeriform.com/prod/GodWit/daemon"
+exclude = [
+"assets/*"
+]
+edition = "2018"
+
+[lib]
+name = "godwit-daemon"
+path = "src/lib.rs"
+
+[[bin]]
+name = "godwit-daemon"
+path = "src/main.rs"
+
+[dependencies]
