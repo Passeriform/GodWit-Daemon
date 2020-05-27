@@ -1,16 +1,21 @@
 [package]
 name = "godwit-daemon"
-description = "A daemon runner for godwit."
+description = "A daemon runner for GodWit."
 version = "0.1.0"
 authors = ["Utkarsh Bhardwaj (Passeriform) <passeriform.ub@gmail.com>"]
 readme = "README.md"
-license = "MIT"
+keywords = ["daemon", "runner", "tracker", "service", "internal"]
+categories = ["command-line-utilities", "asynchronous", "concurrency"]
+license = "MIT OR Apache-2.0"
 repository = "https://github.com/Passeriform/GodWit-Daemon"
 homepage = "https://www.passeriform.com/prod/GodWit/daemon"
 exclude = [
 "assets/*"
 ]
 edition = "2018"
+
+[badges]
+travis-ci = { repository = "Passeriform/GodWit-Daemon" }
 
 [lib]
 name = "godwit-daemon"
@@ -20,4 +25,9 @@ path = "src/lib.rs"
 name = "godwit-daemon"
 path = "src/main.rs"
 
+[[test]]
+name = "integration"
+path = "tests/tests.rs"
+
 [dependencies]
+crossbeam = "0.7.3"
