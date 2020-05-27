@@ -18,11 +18,11 @@ edition = "2018"
 travis-ci = { repository = "Passeriform/GodWit-Daemon" }
 
 [lib]
-name = "godwit-daemon"
+name = "daemon"
 path = "src/lib.rs"
 
 [[bin]]
-name = "godwit-daemon"
+name = "daemon"
 path = "src/main.rs"
 
 [[test]]
