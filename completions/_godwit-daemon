@@ -1,0 +1,410 @@
+#compdef godwit-daemon
+
+autoload -U is-at-least
+
+_godwit-daemon() {
+    typeset -A opt_args
+    typeset -a _arguments_options
+    local ret=1
+
+    if is-at-least 5.2; then
+        _arguments_options=(-s -S -C)
+    else
+        _arguments_options=(-s -C)
+    fi
+
+    local context curcontext="$curcontext" state line
+    _arguments "${_arguments_options[@]}" \
+'(-v --verbose)-q[Silence all output]' \
+'(-v --verbose)--quiet[Silence all output]' \
+'(-q --quiet)*-v[Debug mode]' \
+'(-q --quiet)*--verbose[Debug mode]' \
+'-h[Prints help information]' \
+'--help[Prints help information]' \
+'-V[Prints version information]' \
+'--version[Prints version information]' \
+":: :_godwit-daemon_commands" \
+"*::: :->Godwit-Daemon" \
+&& ret=0
+    case $state in
+    (Godwit-Daemon)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:godwit-daemon-command-$line[1]:"
+        case $line[1] in
+            (new)
+_arguments "${_arguments_options[@]}" \
+'-s+[]' \
+'--source=[]' \
+'-h[Prints help information]' \
+'--help[Prints help information]' \
+'-V[Prints version information]' \
+'--version[Prints version information]' \
+'(-v --verbose)-q[Silence all output]' \
+'(-v --verbose)--quiet[Silence all output]' \
+'(-q --quiet)*-v[Debug mode]' \
+'(-q --quiet)*--verbose[Debug mode]' \
+":: :_godwit-daemon__new_commands" \
+"*::: :->new" \
+&& ret=0
+case $state in
+    (new)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:godwit-daemon-new-command-$line[1]:"
+        case $line[1] in
+            (trace)
+_arguments "${_arguments_options[@]}" \
+'-h[Prints help information]' \
+'--help[Prints help information]' \
+'-V[Prints version information]' \
+'--version[Prints version information]' \
+'(-v --verbose)-q[Silence all output]' \
+'(-v --verbose)--quiet[Silence all output]' \
+'(-q --quiet)*-v[Debug mode]' \
+'(-q --quiet)*--verbose[Debug mode]' \
+':application -- Application name:_files' \
+&& ret=0
+;;
+(split)
+_arguments "${_arguments_options[@]}" \
+'-h[Prints help information]' \
+'--help[Prints help information]' \
+'-V[Prints version information]' \
+'--version[Prints version information]' \
+'(-v --verbose)-q[Silence all output]' \
+'(-v --verbose)--quiet[Silence all output]' \
+'(-q --quiet)*-v[Debug mode]' \
+'(-q --quiet)*--verbose[Debug mode]' \
+':application -- Application name:_files' \
+&& ret=0
+;;
+(prune)
+_arguments "${_arguments_options[@]}" \
+'-h[Prints help information]' \
+'--help[Prints help information]' \
+'-V[Prints version information]' \
+'--version[Prints version information]' \
+'(-v --verbose)-q[Silence all output]' \
+'(-v --verbose)--quiet[Silence all output]' \
+'(-q --quiet)*-v[Debug mode]' \
+'(-q --quiet)*--verbose[Debug mode]' \
+':application -- application:_files' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+'-h[Prints help information]' \
+'--help[Prints help information]' \
+'-V[Prints version information]' \
+'--version[Prints version information]' \
+'(-v --verbose)-q[Silence all output]' \
+'(-v --verbose)--quiet[Silence all output]' \
+'(-q --quiet)*-v[Debug mode]' \
+'(-q --quiet)*--verbose[Debug mode]' \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(regress)
+_arguments "${_arguments_options[@]}" \
+'-s+[]' \
+'--source=[]' \
+'-h[Prints help information]' \
+'--help[Prints help information]' \
+'-V[Prints version information]' \
+'--version[Prints version information]' \
+'(-v --verbose)-q[Silence all output]' \
+'(-v --verbose)--quiet[Silence all output]' \
+'(-q --quiet)*-v[Debug mode]' \
+'(-q --quiet)*--verbose[Debug mode]' \
+":: :_godwit-daemon__regress_commands" \
+"*::: :->regress" \
+&& ret=0
+case $state in
+    (regress)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:godwit-daemon-regress-command-$line[1]:"
+        case $line[1] in
+            (trace)
+_arguments "${_arguments_options[@]}" \
+'-h[Prints help information]' \
+'--help[Prints help information]' \
+'-V[Prints version information]' \
+'--version[Prints version information]' \
+'(-v --verbose)-q[Silence all output]' \
+'(-v --verbose)--quiet[Silence all output]' \
+'(-q --quiet)*-v[Debug mode]' \
+'(-q --quiet)*--verbose[Debug mode]' \
+':application -- Application name:_files' \
+&& ret=0
+;;
+(split)
+_arguments "${_arguments_options[@]}" \
+'-h[Prints help information]' \
+'--help[Prints help information]' \
+'-V[Prints version information]' \
+'--version[Prints version information]' \
+'(-v --verbose)-q[Silence all output]' \
+'(-v --verbose)--quiet[Silence all output]' \
+'(-q --quiet)*-v[Debug mode]' \
+'(-q --quiet)*--verbose[Debug mode]' \
+':application -- Application name:_files' \
+&& ret=0
+;;
+(prune)
+_arguments "${_arguments_options[@]}" \
+'-h[Prints help information]' \
+'--help[Prints help information]' \
+'-V[Prints version information]' \
+'--version[Prints version information]' \
+'(-v --verbose)-q[Silence all output]' \
+'(-v --verbose)--quiet[Silence all output]' \
+'(-q --quiet)*-v[Debug mode]' \
+'(-q --quiet)*--verbose[Debug mode]' \
+':application -- application:_files' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+'-h[Prints help information]' \
+'--help[Prints help information]' \
+'-V[Prints version information]' \
+'--version[Prints version information]' \
+'(-v --verbose)-q[Silence all output]' \
+'(-v --verbose)--quiet[Silence all output]' \
+'(-q --quiet)*-v[Debug mode]' \
+'(-q --quiet)*--verbose[Debug mode]' \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(die)
+_arguments "${_arguments_options[@]}" \
+'-h[Prints help information]' \
+'--help[Prints help information]' \
+'-V[Prints version information]' \
+'--version[Prints version information]' \
+'(-v --verbose)-q[Silence all output]' \
+'(-v --verbose)--quiet[Silence all output]' \
+'(-q --quiet)*-v[Debug mode]' \
+'(-q --quiet)*--verbose[Debug mode]' \
+":: :_godwit-daemon__die_commands" \
+"*::: :->die" \
+&& ret=0
+case $state in
+    (die)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:godwit-daemon-die-command-$line[1]:"
+        case $line[1] in
+            (trace)
+_arguments "${_arguments_options[@]}" \
+'-h[Prints help information]' \
+'--help[Prints help information]' \
+'-V[Prints version information]' \
+'--version[Prints version information]' \
+'(-v --verbose)-q[Silence all output]' \
+'(-v --verbose)--quiet[Silence all output]' \
+'(-q --quiet)*-v[Debug mode]' \
+'(-q --quiet)*--verbose[Debug mode]' \
+':application -- Application name:_files' \
+&& ret=0
+;;
+(split)
+_arguments "${_arguments_options[@]}" \
+'-h[Prints help information]' \
+'--help[Prints help information]' \
+'-V[Prints version information]' \
+'--version[Prints version information]' \
+'(-v --verbose)-q[Silence all output]' \
+'(-v --verbose)--quiet[Silence all output]' \
+'(-q --quiet)*-v[Debug mode]' \
+'(-q --quiet)*--verbose[Debug mode]' \
+':application -- Application name:_files' \
+&& ret=0
+;;
+(prune)
+_arguments "${_arguments_options[@]}" \
+'-h[Prints help information]' \
+'--help[Prints help information]' \
+'-V[Prints version information]' \
+'--version[Prints version information]' \
+'(-v --verbose)-q[Silence all output]' \
+'(-v --verbose)--quiet[Silence all output]' \
+'(-q --quiet)*-v[Debug mode]' \
+'(-q --quiet)*--verbose[Debug mode]' \
+':application -- application:_files' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+'-h[Prints help information]' \
+'--help[Prints help information]' \
+'-V[Prints version information]' \
+'--version[Prints version information]' \
+'(-v --verbose)-q[Silence all output]' \
+'(-v --verbose)--quiet[Silence all output]' \
+'(-q --quiet)*-v[Debug mode]' \
+'(-q --quiet)*--verbose[Debug mode]' \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+'-h[Prints help information]' \
+'--help[Prints help information]' \
+'-V[Prints version information]' \
+'--version[Prints version information]' \
+'(-v --verbose)-q[Silence all output]' \
+'(-v --verbose)--quiet[Silence all output]' \
+'(-q --quiet)*-v[Debug mode]' \
+'(-q --quiet)*--verbose[Debug mode]' \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+}
+
+(( $+functions[_godwit-daemon_commands] )) ||
+_godwit-daemon_commands() {
+    local commands; commands=(
+        "new:Start new task and schedule" \
+"regress:Regress operation until killsignal sent" \
+"die:Send killsignal" \
+"help:Prints this message or the help of the given subcommand(s)" \
+    )
+    _describe -t commands 'godwit-daemon commands' commands "$@"
+}
+(( $+functions[_godwit-daemon__die_commands] )) ||
+_godwit-daemon__die_commands() {
+    local commands; commands=(
+        "trace:Trace an application state" \
+"split:Split applications" \
+"prune:Prune unwanted diffs" \
+"help:Prints this message or the help of the given subcommand(s)" \
+    )
+    _describe -t commands 'godwit-daemon die commands' commands "$@"
+}
+(( $+functions[_godwit-daemon__die__help_commands] )) ||
+_godwit-daemon__die__help_commands() {
+    local commands; commands=(
+        
+    )
+    _describe -t commands 'godwit-daemon die help commands' commands "$@"
+}
+(( $+functions[_godwit-daemon__help_commands] )) ||
+_godwit-daemon__help_commands() {
+    local commands; commands=(
+        
+    )
+    _describe -t commands 'godwit-daemon help commands' commands "$@"
+}
+(( $+functions[_godwit-daemon__new__help_commands] )) ||
+_godwit-daemon__new__help_commands() {
+    local commands; commands=(
+        
+    )
+    _describe -t commands 'godwit-daemon new help commands' commands "$@"
+}
+(( $+functions[_godwit-daemon__regress__help_commands] )) ||
+_godwit-daemon__regress__help_commands() {
+    local commands; commands=(
+        
+    )
+    _describe -t commands 'godwit-daemon regress help commands' commands "$@"
+}
+(( $+functions[_godwit-daemon__new_commands] )) ||
+_godwit-daemon__new_commands() {
+    local commands; commands=(
+        "trace:Trace an application state" \
+"split:Split applications" \
+"prune:Prune unwanted diffs" \
+"help:Prints this message or the help of the given subcommand(s)" \
+    )
+    _describe -t commands 'godwit-daemon new commands' commands "$@"
+}
+(( $+functions[_godwit-daemon__die__prune_commands] )) ||
+_godwit-daemon__die__prune_commands() {
+    local commands; commands=(
+        
+    )
+    _describe -t commands 'godwit-daemon die prune commands' commands "$@"
+}
+(( $+functions[_godwit-daemon__new__prune_commands] )) ||
+_godwit-daemon__new__prune_commands() {
+    local commands; commands=(
+        
+    )
+    _describe -t commands 'godwit-daemon new prune commands' commands "$@"
+}
+(( $+functions[_godwit-daemon__regress__prune_commands] )) ||
+_godwit-daemon__regress__prune_commands() {
+    local commands; commands=(
+        
+    )
+    _describe -t commands 'godwit-daemon regress prune commands' commands "$@"
+}
+(( $+functions[_godwit-daemon__regress_commands] )) ||
+_godwit-daemon__regress_commands() {
+    local commands; commands=(
+        "trace:Trace an application state" \
+"split:Split applications" \
+"prune:Prune unwanted diffs" \
+"help:Prints this message or the help of the given subcommand(s)" \
+    )
+    _describe -t commands 'godwit-daemon regress commands' commands "$@"
+}
+(( $+functions[_godwit-daemon__die__split_commands] )) ||
+_godwit-daemon__die__split_commands() {
+    local commands; commands=(
+        
+    )
+    _describe -t commands 'godwit-daemon die split commands' commands "$@"
+}
+(( $+functions[_godwit-daemon__new__split_commands] )) ||
+_godwit-daemon__new__split_commands() {
+    local commands; commands=(
+        
+    )
+    _describe -t commands 'godwit-daemon new split commands' commands "$@"
+}
+(( $+functions[_godwit-daemon__regress__split_commands] )) ||
+_godwit-daemon__regress__split_commands() {
+    local commands; commands=(
+        
+    )
+    _describe -t commands 'godwit-daemon regress split commands' commands "$@"
+}
+(( $+functions[_godwit-daemon__die__trace_commands] )) ||
+_godwit-daemon__die__trace_commands() {
+    local commands; commands=(
+        
+    )
+    _describe -t commands 'godwit-daemon die trace commands' commands "$@"
+}
+(( $+functions[_godwit-daemon__new__trace_commands] )) ||
+_godwit-daemon__new__trace_commands() {
+    local commands; commands=(
+        
+    )
+    _describe -t commands 'godwit-daemon new trace commands' commands "$@"
+}
+(( $+functions[_godwit-daemon__regress__trace_commands] )) ||
+_godwit-daemon__regress__trace_commands() {
+    local commands; commands=(
+        
+    )
+    _describe -t commands 'godwit-daemon regress trace commands' commands "$@"
+}
+
+_godwit-daemon "$@"
