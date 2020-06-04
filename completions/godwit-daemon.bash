@@ -22,9 +22,6 @@ _godwit-daemon() {
             new)
                 cmd+="__new"
                 ;;
-            prune)
-                cmd+="__prune"
-                ;;
             regress)
                 cmd+="__regress"
                 ;;
@@ -57,7 +54,7 @@ _godwit-daemon() {
             ;;
         
         godwit__daemon__die)
-            opts=" -h -V -q -v  --help --version --quiet --verbose   trace split prune help"
+            opts=" -h -V -q -v  --help --version --quiet --verbose   trace split help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -73,21 +70,6 @@ _godwit-daemon() {
             ;;
         godwit__daemon__die__help)
             opts=" -h -V -q -v  --help --version --quiet --verbose  "
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
-        godwit__daemon__die__prune)
-            opts=" -h -V -q -v  --help --version --quiet --verbose  <application> "
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -147,21 +129,13 @@ _godwit-daemon() {
             return 0
             ;;
         godwit__daemon__new)
-            opts=" -h -V -q -v -s  --help --version --quiet --verbose --source   trace split prune help"
+            opts=" -r -h -V -q -v  --refresh --help --version --quiet --verbose   trace split help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
             fi
             case "${prev}" in
                 
-                --source)
-                    COMPREPLY=($(compgen -f "${cur}"))
-                    return 0
-                    ;;
-                    -s)
-                    COMPREPLY=($(compgen -f "${cur}"))
-                    return 0
-                    ;;
                 *)
                     COMPREPLY=()
                     ;;
@@ -170,22 +144,7 @@ _godwit-daemon() {
             return 0
             ;;
         godwit__daemon__new__help)
-            opts=" -h -V -q -v  --help --version --quiet --verbose  "
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
-        godwit__daemon__new__prune)
-            opts=" -h -V -q -v  --help --version --quiet --verbose  <application> "
+            opts=" -h -V -r -q -v  --help --version --refresh --quiet --verbose  "
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -200,7 +159,7 @@ _godwit-daemon() {
             return 0
             ;;
         godwit__daemon__new__split)
-            opts=" -h -V -q -v  --help --version --quiet --verbose  <application> "
+            opts=" -h -V -r -q -v  --help --version --refresh --quiet --verbose  <application> "
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -215,7 +174,7 @@ _godwit-daemon() {
             return 0
             ;;
         godwit__daemon__new__trace)
-            opts=" -h -V -q -v  --help --version --quiet --verbose  <application> "
+            opts=" -h -V -r -q -v  --help --version --refresh --quiet --verbose  <application> "
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -230,21 +189,13 @@ _godwit-daemon() {
             return 0
             ;;
         godwit__daemon__regress)
-            opts=" -h -V -q -v -s  --help --version --quiet --verbose --source   trace split prune help"
+            opts=" -r -h -V -q -v  --refresh --help --version --quiet --verbose   trace split help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
             fi
             case "${prev}" in
                 
-                --source)
-                    COMPREPLY=($(compgen -f "${cur}"))
-                    return 0
-                    ;;
-                    -s)
-                    COMPREPLY=($(compgen -f "${cur}"))
-                    return 0
-                    ;;
                 *)
                     COMPREPLY=()
                     ;;
@@ -253,22 +204,7 @@ _godwit-daemon() {
             return 0
             ;;
         godwit__daemon__regress__help)
-            opts=" -h -V -q -v  --help --version --quiet --verbose  "
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
-        godwit__daemon__regress__prune)
-            opts=" -h -V -q -v  --help --version --quiet --verbose  <application> "
+            opts=" -h -V -r -q -v  --help --version --refresh --quiet --verbose  "
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -283,7 +219,7 @@ _godwit-daemon() {
             return 0
             ;;
         godwit__daemon__regress__split)
-            opts=" -h -V -q -v  --help --version --quiet --verbose  <application> "
+            opts=" -h -V -r -q -v  --help --version --refresh --quiet --verbose  <application> "
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -298,7 +234,7 @@ _godwit-daemon() {
             return 0
             ;;
         godwit__daemon__regress__trace)
-            opts=" -h -V -q -v  --help --version --quiet --verbose  <application> "
+            opts=" -h -V -r -q -v  --help --version --refresh --quiet --verbose  <application> "
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0

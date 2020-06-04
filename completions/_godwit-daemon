@@ -34,8 +34,8 @@ _godwit-daemon() {
         case $line[1] in
             (new)
 _arguments "${_arguments_options[@]}" \
-'-s+[]' \
-'--source=[]' \
+'-r[Discard all previous diffs]' \
+'--refresh[Discard all previous diffs]' \
 '-h[Prints help information]' \
 '--help[Prints help information]' \
 '-V[Prints version information]' \
@@ -59,6 +59,8 @@ _arguments "${_arguments_options[@]}" \
 '--help[Prints help information]' \
 '-V[Prints version information]' \
 '--version[Prints version information]' \
+'-r[Discard all previous diffs]' \
+'--refresh[Discard all previous diffs]' \
 '(-v --verbose)-q[Silence all output]' \
 '(-v --verbose)--quiet[Silence all output]' \
 '(-q --quiet)*-v[Debug mode]' \
@@ -72,24 +74,13 @@ _arguments "${_arguments_options[@]}" \
 '--help[Prints help information]' \
 '-V[Prints version information]' \
 '--version[Prints version information]' \
+'-r[Discard all previous diffs]' \
+'--refresh[Discard all previous diffs]' \
 '(-v --verbose)-q[Silence all output]' \
 '(-v --verbose)--quiet[Silence all output]' \
 '(-q --quiet)*-v[Debug mode]' \
 '(-q --quiet)*--verbose[Debug mode]' \
 ':application -- Application name:_files' \
-&& ret=0
-;;
-(prune)
-_arguments "${_arguments_options[@]}" \
-'-h[Prints help information]' \
-'--help[Prints help information]' \
-'-V[Prints version information]' \
-'--version[Prints version information]' \
-'(-v --verbose)-q[Silence all output]' \
-'(-v --verbose)--quiet[Silence all output]' \
-'(-q --quiet)*-v[Debug mode]' \
-'(-q --quiet)*--verbose[Debug mode]' \
-':application -- application:_files' \
 && ret=0
 ;;
 (help)
@@ -98,6 +89,8 @@ _arguments "${_arguments_options[@]}" \
 '--help[Prints help information]' \
 '-V[Prints version information]' \
 '--version[Prints version information]' \
+'-r[Discard all previous diffs]' \
+'--refresh[Discard all previous diffs]' \
 '(-v --verbose)-q[Silence all output]' \
 '(-v --verbose)--quiet[Silence all output]' \
 '(-q --quiet)*-v[Debug mode]' \
@@ -110,8 +103,8 @@ esac
 ;;
 (regress)
 _arguments "${_arguments_options[@]}" \
-'-s+[]' \
-'--source=[]' \
+'-r[Discard all previous diffs]' \
+'--refresh[Discard all previous diffs]' \
 '-h[Prints help information]' \
 '--help[Prints help information]' \
 '-V[Prints version information]' \
@@ -135,6 +128,8 @@ _arguments "${_arguments_options[@]}" \
 '--help[Prints help information]' \
 '-V[Prints version information]' \
 '--version[Prints version information]' \
+'-r[Discard all previous diffs]' \
+'--refresh[Discard all previous diffs]' \
 '(-v --verbose)-q[Silence all output]' \
 '(-v --verbose)--quiet[Silence all output]' \
 '(-q --quiet)*-v[Debug mode]' \
@@ -148,24 +143,13 @@ _arguments "${_arguments_options[@]}" \
 '--help[Prints help information]' \
 '-V[Prints version information]' \
 '--version[Prints version information]' \
+'-r[Discard all previous diffs]' \
+'--refresh[Discard all previous diffs]' \
 '(-v --verbose)-q[Silence all output]' \
 '(-v --verbose)--quiet[Silence all output]' \
 '(-q --quiet)*-v[Debug mode]' \
 '(-q --quiet)*--verbose[Debug mode]' \
 ':application -- Application name:_files' \
-&& ret=0
-;;
-(prune)
-_arguments "${_arguments_options[@]}" \
-'-h[Prints help information]' \
-'--help[Prints help information]' \
-'-V[Prints version information]' \
-'--version[Prints version information]' \
-'(-v --verbose)-q[Silence all output]' \
-'(-v --verbose)--quiet[Silence all output]' \
-'(-q --quiet)*-v[Debug mode]' \
-'(-q --quiet)*--verbose[Debug mode]' \
-':application -- application:_files' \
 && ret=0
 ;;
 (help)
@@ -174,6 +158,8 @@ _arguments "${_arguments_options[@]}" \
 '--help[Prints help information]' \
 '-V[Prints version information]' \
 '--version[Prints version information]' \
+'-r[Discard all previous diffs]' \
+'--refresh[Discard all previous diffs]' \
 '(-v --verbose)-q[Silence all output]' \
 '(-v --verbose)--quiet[Silence all output]' \
 '(-q --quiet)*-v[Debug mode]' \
@@ -229,19 +215,6 @@ _arguments "${_arguments_options[@]}" \
 ':application -- Application name:_files' \
 && ret=0
 ;;
-(prune)
-_arguments "${_arguments_options[@]}" \
-'-h[Prints help information]' \
-'--help[Prints help information]' \
-'-V[Prints version information]' \
-'--version[Prints version information]' \
-'(-v --verbose)-q[Silence all output]' \
-'(-v --verbose)--quiet[Silence all output]' \
-'(-q --quiet)*-v[Debug mode]' \
-'(-q --quiet)*--verbose[Debug mode]' \
-':application -- application:_files' \
-&& ret=0
-;;
 (help)
 _arguments "${_arguments_options[@]}" \
 '-h[Prints help information]' \
@@ -289,8 +262,7 @@ _godwit-daemon_commands() {
 _godwit-daemon__die_commands() {
     local commands; commands=(
         "trace:Trace an application state" \
-"split:Split applications" \
-"prune:Prune unwanted diffs" \
+"split:Split processess" \
 "help:Prints this message or the help of the given subcommand(s)" \
     )
     _describe -t commands 'godwit-daemon die commands' commands "$@"
@@ -327,39 +299,16 @@ _godwit-daemon__regress__help_commands() {
 _godwit-daemon__new_commands() {
     local commands; commands=(
         "trace:Trace an application state" \
-"split:Split applications" \
-"prune:Prune unwanted diffs" \
+"split:Split processess" \
 "help:Prints this message or the help of the given subcommand(s)" \
     )
     _describe -t commands 'godwit-daemon new commands' commands "$@"
-}
-(( $+functions[_godwit-daemon__die__prune_commands] )) ||
-_godwit-daemon__die__prune_commands() {
-    local commands; commands=(
-        
-    )
-    _describe -t commands 'godwit-daemon die prune commands' commands "$@"
-}
-(( $+functions[_godwit-daemon__new__prune_commands] )) ||
-_godwit-daemon__new__prune_commands() {
-    local commands; commands=(
-        
-    )
-    _describe -t commands 'godwit-daemon new prune commands' commands "$@"
-}
-(( $+functions[_godwit-daemon__regress__prune_commands] )) ||
-_godwit-daemon__regress__prune_commands() {
-    local commands; commands=(
-        
-    )
-    _describe -t commands 'godwit-daemon regress prune commands' commands "$@"
 }
 (( $+functions[_godwit-daemon__regress_commands] )) ||
 _godwit-daemon__regress_commands() {
     local commands; commands=(
         "trace:Trace an application state" \
-"split:Split applications" \
-"prune:Prune unwanted diffs" \
+"split:Split processess" \
 "help:Prints this message or the help of the given subcommand(s)" \
     )
     _describe -t commands 'godwit-daemon regress commands' commands "$@"

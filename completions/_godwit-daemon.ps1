@@ -35,8 +35,8 @@ Register-ArgumentCompleter -Native -CommandName 'godwit-daemon' -ScriptBlock {
             break
         }
         'godwit-daemon;new' {
-            [CompletionResult]::new('-s', 's', [CompletionResultType]::ParameterName, 's')
-            [CompletionResult]::new('--source', 'source', [CompletionResultType]::ParameterName, 'source')
+            [CompletionResult]::new('-r', 'r', [CompletionResultType]::ParameterName, 'Discard all previous diffs')
+            [CompletionResult]::new('--refresh', 'refresh', [CompletionResultType]::ParameterName, 'Discard all previous diffs')
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Prints help information')
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Prints help information')
             [CompletionResult]::new('-V', 'V', [CompletionResultType]::ParameterName, 'Prints version information')
@@ -46,8 +46,7 @@ Register-ArgumentCompleter -Native -CommandName 'godwit-daemon' -ScriptBlock {
             [CompletionResult]::new('-v', 'v', [CompletionResultType]::ParameterName, 'Debug mode')
             [CompletionResult]::new('--verbose', 'verbose', [CompletionResultType]::ParameterName, 'Debug mode')
             [CompletionResult]::new('trace', 'trace', [CompletionResultType]::ParameterValue, 'Trace an application state')
-            [CompletionResult]::new('split', 'split', [CompletionResultType]::ParameterValue, 'Split applications')
-            [CompletionResult]::new('prune', 'prune', [CompletionResultType]::ParameterValue, 'Prune unwanted diffs')
+            [CompletionResult]::new('split', 'split', [CompletionResultType]::ParameterValue, 'Split processess')
             [CompletionResult]::new('help', 'help', [CompletionResultType]::ParameterValue, 'Prints this message or the help of the given subcommand(s)')
             break
         }
@@ -56,6 +55,8 @@ Register-ArgumentCompleter -Native -CommandName 'godwit-daemon' -ScriptBlock {
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Prints help information')
             [CompletionResult]::new('-V', 'V', [CompletionResultType]::ParameterName, 'Prints version information')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Prints version information')
+            [CompletionResult]::new('-r', 'r', [CompletionResultType]::ParameterName, 'Discard all previous diffs')
+            [CompletionResult]::new('--refresh', 'refresh', [CompletionResultType]::ParameterName, 'Discard all previous diffs')
             [CompletionResult]::new('-q', 'q', [CompletionResultType]::ParameterName, 'Silence all output')
             [CompletionResult]::new('--quiet', 'quiet', [CompletionResultType]::ParameterName, 'Silence all output')
             [CompletionResult]::new('-v', 'v', [CompletionResultType]::ParameterName, 'Debug mode')
@@ -67,17 +68,8 @@ Register-ArgumentCompleter -Native -CommandName 'godwit-daemon' -ScriptBlock {
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Prints help information')
             [CompletionResult]::new('-V', 'V', [CompletionResultType]::ParameterName, 'Prints version information')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Prints version information')
-            [CompletionResult]::new('-q', 'q', [CompletionResultType]::ParameterName, 'Silence all output')
-            [CompletionResult]::new('--quiet', 'quiet', [CompletionResultType]::ParameterName, 'Silence all output')
-            [CompletionResult]::new('-v', 'v', [CompletionResultType]::ParameterName, 'Debug mode')
-            [CompletionResult]::new('--verbose', 'verbose', [CompletionResultType]::ParameterName, 'Debug mode')
-            break
-        }
-        'godwit-daemon;new;prune' {
-            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Prints help information')
-            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Prints help information')
-            [CompletionResult]::new('-V', 'V', [CompletionResultType]::ParameterName, 'Prints version information')
-            [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Prints version information')
+            [CompletionResult]::new('-r', 'r', [CompletionResultType]::ParameterName, 'Discard all previous diffs')
+            [CompletionResult]::new('--refresh', 'refresh', [CompletionResultType]::ParameterName, 'Discard all previous diffs')
             [CompletionResult]::new('-q', 'q', [CompletionResultType]::ParameterName, 'Silence all output')
             [CompletionResult]::new('--quiet', 'quiet', [CompletionResultType]::ParameterName, 'Silence all output')
             [CompletionResult]::new('-v', 'v', [CompletionResultType]::ParameterName, 'Debug mode')
@@ -89,6 +81,8 @@ Register-ArgumentCompleter -Native -CommandName 'godwit-daemon' -ScriptBlock {
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Prints help information')
             [CompletionResult]::new('-V', 'V', [CompletionResultType]::ParameterName, 'Prints version information')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Prints version information')
+            [CompletionResult]::new('-r', 'r', [CompletionResultType]::ParameterName, 'Discard all previous diffs')
+            [CompletionResult]::new('--refresh', 'refresh', [CompletionResultType]::ParameterName, 'Discard all previous diffs')
             [CompletionResult]::new('-q', 'q', [CompletionResultType]::ParameterName, 'Silence all output')
             [CompletionResult]::new('--quiet', 'quiet', [CompletionResultType]::ParameterName, 'Silence all output')
             [CompletionResult]::new('-v', 'v', [CompletionResultType]::ParameterName, 'Debug mode')
@@ -96,8 +90,8 @@ Register-ArgumentCompleter -Native -CommandName 'godwit-daemon' -ScriptBlock {
             break
         }
         'godwit-daemon;regress' {
-            [CompletionResult]::new('-s', 's', [CompletionResultType]::ParameterName, 's')
-            [CompletionResult]::new('--source', 'source', [CompletionResultType]::ParameterName, 'source')
+            [CompletionResult]::new('-r', 'r', [CompletionResultType]::ParameterName, 'Discard all previous diffs')
+            [CompletionResult]::new('--refresh', 'refresh', [CompletionResultType]::ParameterName, 'Discard all previous diffs')
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Prints help information')
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Prints help information')
             [CompletionResult]::new('-V', 'V', [CompletionResultType]::ParameterName, 'Prints version information')
@@ -107,8 +101,7 @@ Register-ArgumentCompleter -Native -CommandName 'godwit-daemon' -ScriptBlock {
             [CompletionResult]::new('-v', 'v', [CompletionResultType]::ParameterName, 'Debug mode')
             [CompletionResult]::new('--verbose', 'verbose', [CompletionResultType]::ParameterName, 'Debug mode')
             [CompletionResult]::new('trace', 'trace', [CompletionResultType]::ParameterValue, 'Trace an application state')
-            [CompletionResult]::new('split', 'split', [CompletionResultType]::ParameterValue, 'Split applications')
-            [CompletionResult]::new('prune', 'prune', [CompletionResultType]::ParameterValue, 'Prune unwanted diffs')
+            [CompletionResult]::new('split', 'split', [CompletionResultType]::ParameterValue, 'Split processess')
             [CompletionResult]::new('help', 'help', [CompletionResultType]::ParameterValue, 'Prints this message or the help of the given subcommand(s)')
             break
         }
@@ -117,6 +110,8 @@ Register-ArgumentCompleter -Native -CommandName 'godwit-daemon' -ScriptBlock {
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Prints help information')
             [CompletionResult]::new('-V', 'V', [CompletionResultType]::ParameterName, 'Prints version information')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Prints version information')
+            [CompletionResult]::new('-r', 'r', [CompletionResultType]::ParameterName, 'Discard all previous diffs')
+            [CompletionResult]::new('--refresh', 'refresh', [CompletionResultType]::ParameterName, 'Discard all previous diffs')
             [CompletionResult]::new('-q', 'q', [CompletionResultType]::ParameterName, 'Silence all output')
             [CompletionResult]::new('--quiet', 'quiet', [CompletionResultType]::ParameterName, 'Silence all output')
             [CompletionResult]::new('-v', 'v', [CompletionResultType]::ParameterName, 'Debug mode')
@@ -128,17 +123,8 @@ Register-ArgumentCompleter -Native -CommandName 'godwit-daemon' -ScriptBlock {
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Prints help information')
             [CompletionResult]::new('-V', 'V', [CompletionResultType]::ParameterName, 'Prints version information')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Prints version information')
-            [CompletionResult]::new('-q', 'q', [CompletionResultType]::ParameterName, 'Silence all output')
-            [CompletionResult]::new('--quiet', 'quiet', [CompletionResultType]::ParameterName, 'Silence all output')
-            [CompletionResult]::new('-v', 'v', [CompletionResultType]::ParameterName, 'Debug mode')
-            [CompletionResult]::new('--verbose', 'verbose', [CompletionResultType]::ParameterName, 'Debug mode')
-            break
-        }
-        'godwit-daemon;regress;prune' {
-            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Prints help information')
-            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Prints help information')
-            [CompletionResult]::new('-V', 'V', [CompletionResultType]::ParameterName, 'Prints version information')
-            [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Prints version information')
+            [CompletionResult]::new('-r', 'r', [CompletionResultType]::ParameterName, 'Discard all previous diffs')
+            [CompletionResult]::new('--refresh', 'refresh', [CompletionResultType]::ParameterName, 'Discard all previous diffs')
             [CompletionResult]::new('-q', 'q', [CompletionResultType]::ParameterName, 'Silence all output')
             [CompletionResult]::new('--quiet', 'quiet', [CompletionResultType]::ParameterName, 'Silence all output')
             [CompletionResult]::new('-v', 'v', [CompletionResultType]::ParameterName, 'Debug mode')
@@ -150,6 +136,8 @@ Register-ArgumentCompleter -Native -CommandName 'godwit-daemon' -ScriptBlock {
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Prints help information')
             [CompletionResult]::new('-V', 'V', [CompletionResultType]::ParameterName, 'Prints version information')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Prints version information')
+            [CompletionResult]::new('-r', 'r', [CompletionResultType]::ParameterName, 'Discard all previous diffs')
+            [CompletionResult]::new('--refresh', 'refresh', [CompletionResultType]::ParameterName, 'Discard all previous diffs')
             [CompletionResult]::new('-q', 'q', [CompletionResultType]::ParameterName, 'Silence all output')
             [CompletionResult]::new('--quiet', 'quiet', [CompletionResultType]::ParameterName, 'Silence all output')
             [CompletionResult]::new('-v', 'v', [CompletionResultType]::ParameterName, 'Debug mode')
@@ -166,8 +154,7 @@ Register-ArgumentCompleter -Native -CommandName 'godwit-daemon' -ScriptBlock {
             [CompletionResult]::new('-v', 'v', [CompletionResultType]::ParameterName, 'Debug mode')
             [CompletionResult]::new('--verbose', 'verbose', [CompletionResultType]::ParameterName, 'Debug mode')
             [CompletionResult]::new('trace', 'trace', [CompletionResultType]::ParameterValue, 'Trace an application state')
-            [CompletionResult]::new('split', 'split', [CompletionResultType]::ParameterValue, 'Split applications')
-            [CompletionResult]::new('prune', 'prune', [CompletionResultType]::ParameterValue, 'Prune unwanted diffs')
+            [CompletionResult]::new('split', 'split', [CompletionResultType]::ParameterValue, 'Split processess')
             [CompletionResult]::new('help', 'help', [CompletionResultType]::ParameterValue, 'Prints this message or the help of the given subcommand(s)')
             break
         }
@@ -183,17 +170,6 @@ Register-ArgumentCompleter -Native -CommandName 'godwit-daemon' -ScriptBlock {
             break
         }
         'godwit-daemon;die;split' {
-            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Prints help information')
-            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Prints help information')
-            [CompletionResult]::new('-V', 'V', [CompletionResultType]::ParameterName, 'Prints version information')
-            [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Prints version information')
-            [CompletionResult]::new('-q', 'q', [CompletionResultType]::ParameterName, 'Silence all output')
-            [CompletionResult]::new('--quiet', 'quiet', [CompletionResultType]::ParameterName, 'Silence all output')
-            [CompletionResult]::new('-v', 'v', [CompletionResultType]::ParameterName, 'Debug mode')
-            [CompletionResult]::new('--verbose', 'verbose', [CompletionResultType]::ParameterName, 'Debug mode')
-            break
-        }
-        'godwit-daemon;die;prune' {
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Prints help information')
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Prints help information')
             [CompletionResult]::new('-V', 'V', [CompletionResultType]::ParameterName, 'Prints version information')
