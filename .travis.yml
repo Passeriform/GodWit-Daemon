@@ -10,15 +10,16 @@ rust:
   - beta
   - nightly
 
-matrix:
-  fast_finish: true
+jobs:
   allow_failures:
     - rust: nightly
+  fast_finish: true
 
 addons:
   apt:
     packages:
       - libcurl4-openssl-dev
+      - libzmq3-dev
       - libelf-dev
       - libdw-dev
       - cmake
