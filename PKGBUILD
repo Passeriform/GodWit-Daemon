@@ -1,12 +1,12 @@
 # Maintainer: Utkarsh Bhardwaj (Passeriform) <passeriform.ub@gmail.com>
 pkgname=godwit-daemon
-pkgver=0.1.0
+pkgver=0.1.1
 pkgrel=1
 pkgdesc="A daemon runner for GodWit."
 arch=('x86_64' 'i686' 'armv6h' 'armv7h')
 url="https://www.passeriform.com/prod/GodWit/daemon"
 license=('MIT OR Apache-2.0')
-depends=()
+depends=('wmctrl')
 makedepends=('rust' 'cargo')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/Passeriform/GodWit-Daemon/archive/v$pkgver.tar.gz")
 optdepends=('godwit')
