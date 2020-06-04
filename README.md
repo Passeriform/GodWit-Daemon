@@ -1,4 +1,18 @@
 # GodWit Daemon
+
+[![crate](https://img.shields.io/crates/v/godwit)](https://crates.io/crates/godwit-daemon)
+[![docs](https://docs.rs/godwit/badge.svg)](https://docs.rs/godwit-daemon)
+
+[![aur](https://img.shields.io/aur/version/godwit-daemon)](https://aur.archlinux.org/packages/godwit-daemon)
+[![debian](https://img.shields.io/debian/v/godwit-daemon)](https://packages.debian.org/unstable/utils/godwit-daemon)
+[![homebrew](https://img.shields.io/homebrew/v/godwit-daemon)](https://formulae.brew.sh/formula/godwit-daemon)
+
+[![build](https://travis-ci.org/Passeriform/GodWit-Daemon.svg?branch=master)](https://travis-ci.org/Passeriform/GodWit-Daemon)
+[![codecov](https://codecov.io/gh/Passeriform/GodWit-Daemon/branch/master/graph/badge.svg)](https://codecov.io/gh/Passeriform/GodWit-Daemon)
+[![maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/Passeriform/GodWit-Daemon/graphs/commit-activity)
+
+![license](https://img.shields.io/crates/l/godwit-daemon)
+
 A daemon runner for [GodWit](https://github.com/Passeriform/GodWit).
 
 Godwit-daemon is a runner for managing godwit processes. This utility is implicitly
