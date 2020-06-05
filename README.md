@@ -1,17 +1,13 @@
 # GodWit Daemon
 
-[![crate](https://img.shields.io/crates/v/godwit)](https://crates.io/crates/godwit-daemon)
-[![docs](https://docs.rs/godwit/badge.svg)](https://docs.rs/godwit-daemon)
-
-[![aur](https://img.shields.io/aur/version/godwit-daemon)](https://aur.archlinux.org/packages/godwit-daemon)
-[![debian](https://img.shields.io/debian/v/godwit-daemon)](https://packages.debian.org/unstable/utils/godwit-daemon)
-[![homebrew](https://img.shields.io/homebrew/v/godwit-daemon)](https://formulae.brew.sh/formula/godwit-daemon)
-
+[![crate](https://img.shields.io/crates/v/godwit-daemon)](https://crates.io/crates/godwit-daemon)
+[![docs](https://docs.rs/godwit-daemon/badge.svg)](https://docs.rs/godwit-daemon)
 [![build](https://travis-ci.org/Passeriform/GodWit-Daemon.svg?branch=master)](https://travis-ci.org/Passeriform/GodWit-Daemon)
 [![codecov](https://codecov.io/gh/Passeriform/GodWit-Daemon/branch/master/graph/badge.svg)](https://codecov.io/gh/Passeriform/GodWit-Daemon)
 [![maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/Passeriform/GodWit-Daemon/graphs/commit-activity)
 
-![license](https://img.shields.io/crates/l/godwit-daemon)
+[![homepage](https://img.shields.io/website-up-down-green-red/http/passeriform.com.svg?label=Passeriform)](http://www.passeriform.com/prod/GodWit/daemon)
+[![repo](https://img.shields.io/badge/github-GodWit--Daemon-blue?logo=github)](https://github.com/Passeriform/GodWit-Daemon)
 
 A daemon runner for [GodWit](https://github.com/Passeriform/GodWit).
 
@@ -32,6 +28,11 @@ godwit.
 
 
 ## Install
+[![release](https://img.shields.io/github/release/Passeriform/GodWit-Daemon.svg)](https://github.com/Passeriform/GodWit-Daemon/releases/)
+[![aur](https://img.shields.io/aur/version/godwit-daemon)](https://aur.archlinux.org/packages/godwit-daemon)
+[![debian](https://img.shields.io/debian/v/godwit-daemon)](https://packages.debian.org/unstable/utils/godwit-daemon)
+[![homebrew](https://img.shields.io/homebrew/v/godwit-daemon)](https://formulae.brew.sh/formula/godwit-daemon)
+
 The daemon is bundled with GodWit and can be installed as a dependency. If only the daemon is required, it is alse available on AUR and PPA repositories as a separate package.
 
 Simply install it using
@@ -70,7 +71,10 @@ To kill all associated nodes and drop resources.
 $ godwit-daemon die
 ```
 
-## Development
+## Contributing
+[![issues](https://img.shields.io/github/issues/Passeriform/GodWit-Daemon.svg)](https://gitHub.com/Passeriform/GodWit-Daemon/issues/)
+[![pull-requests](https://img.shields.io/github/issues-pr/Passeriform/GodWit-Daemon)](https://github.com/Passeriform/GodWit-Daemon/pulls)
+
 If you want to contribute, start by cloning this repository.
 ```bash
     git clone https://github.com/Passeriform/GodWit Godwit-Daemon
@@ -105,6 +109,7 @@ Code up
 [https://github.com/Passeriform/GodWit-Daemon](https://github.com/Passeriform/GodWit-Daemon)
 
 ## License
+![license](https://img.shields.io/crates/l/godwit-daemon)
 
 Licensed under either of
 
@@ -113,7 +118,7 @@ Licensed under either of
 
 at your option.
 
-### Contribution
+### Credition
 
 Unless you explicitly state otherwise, any contribution intentionally submitted
 for inclusion in the work by you, as defined in the Apache-2.0 license, shall be dual licensed as above, without any
