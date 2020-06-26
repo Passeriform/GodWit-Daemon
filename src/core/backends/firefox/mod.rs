@@ -1,3 +1,4 @@
+use crate::{config, core::Apps};
 use dirs;
 use glob::glob;
 use lz4::block::decompress;
@@ -34,8 +35,15 @@ pub fn trace(refresh: bool) -> Result<(), Box<dyn Error>> {
 			.expect("Path couldn't be converted to string."),
 		"/*.default*/sessionstore-backups/*.*lz4*"
 	))? {
-		let mut lz4file = File::open(lz4path?)?;
+		let lz4path = lz4path?;
+		let mut lz4file = File::open(&lz4path)?;
 		let parsed_json = parse_jsonlz4(&mut lz4file)?;
+
+		if refresh {
+			config::purge_base_file(Apps::Firefox, &lz4path)?;
+		}
+
+		config::update_patches(Apps::Firefox, &lz4path, parsed_json)?;
 	}
 	Ok(())
 }

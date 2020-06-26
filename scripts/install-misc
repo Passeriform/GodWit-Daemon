@@ -4,7 +4,7 @@ pkgdir=$1
 pkgver=$2
 
 generate_man_page() {
-  if [ -z "$1" ]; then
+  if [ -z "$2" ]; then
       echo "No version supplied"
       exit 1
   fi

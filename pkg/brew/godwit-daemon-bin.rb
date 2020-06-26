@@ -1,5 +1,5 @@
 class GodwitDaemonBin < Formula
-  version '0.1.1'
+  version '0.1.2'
   desc "A daemon runner for GodWit."
   homepage "https://github.com/Passeriform/GodWit-Daemon"
 
