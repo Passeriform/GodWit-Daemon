@@ -1,15 +1,15 @@
 mod internal;
 
 use crate::core::Apps;
+use crate::errors::{PatchError, PurgeBaseError, RevisionError};
 use chrono::prelude::*;
 use getter_derive::Getter;
 use glob::glob;
 use log::info;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
-use std::error::Error;
 use std::fmt::Display;
-use std::io::prelude::*;
+use std::io::{self, prelude::*};
 use std::{
 	fs::{self, File},
 	path::Path,
@@ -65,7 +65,7 @@ impl Config {
 		&self,
 		application: Apps,
 		file_name: &str,
-	) -> Result<Value, Box<dyn Error>> {
+	) -> Result<Value, RevisionError> {
 		let base_path = self
 			.daemon_directory
 			.as_path()
@@ -73,8 +73,9 @@ impl Config {
 			.join(format!("{}.base", &file_name));
 
 		if !base_path.exists() {
-			// return Err(Box<"Base path doesn't exist can't traverse revision tree.">);
-			return Ok(Value::default());
+			return Err(RevisionError::BaseNotFound {
+				base_path: file_name.to_string(),
+			});
 		}
 
 		let base = fs::read_to_string(&base_path)?;
@@ -104,7 +105,7 @@ impl Config {
 		application: Apps,
 		file_name: &str,
 		patch_content: T,
-	) -> Result<(), Box<dyn Error>>
+	) -> Result<(), PatchError>
 	where
 		T: Display + Serialize,
 	{
@@ -131,7 +132,7 @@ impl Config {
 			fs::create_dir_all(patch_path.parent().unwrap())?;
 			let mut patch_file = File::create(patch_path)?;
 
-			patch_file.write_all(patch_content.to_string().as_bytes());
+			patch_file.write_all(patch_content.to_string().as_bytes())?;
 		};
 		Ok(())
 	}
@@ -152,7 +153,7 @@ impl Default for Config {
 }
 
 /// Get settings instance from settings source file.
-pub fn get_config() -> Result<Config, Box<dyn Error>> {
+pub fn get_config() -> Result<Config, io::Error> {
 	let config_rc_path: PathBuf = dirs::home_dir()
 		.expect("Home couldn't be located in current $PATH variables.")
 		.join(".gdrc")
@@ -189,7 +190,7 @@ pub fn update_patches(
 	application: Apps,
 	file_path: &Path,
 	curr_instance: Value,
-) -> Result<(), Box<dyn Error>> {
+) -> Result<(), RevisionError> {
 	let config = get_config()?;
 
 	let file_name = file_path
@@ -199,7 +200,9 @@ pub fn update_patches(
 		.into_owned();
 
 	if config.get_base_path(application, &file_name).is_none() {
-		return config.save_patch_file(application, &file_name, curr_instance);
+		return config
+			.save_patch_file(application, &file_name, curr_instance)
+			.map_err(Into::into);
 	}
 
 	let prev_instance = config.get_patched_rev(application, &file_name)?;
@@ -210,7 +213,7 @@ pub fn update_patches(
 	Ok(())
 }
 
-pub fn purge_base_file(application: Apps, file_path: &Path) -> Result<(), Box<dyn Error>> {
+pub fn purge_base_file(application: Apps, file_path: &Path) -> Result<(), PurgeBaseError> {
 	let file_name = file_path
 		.file_name()
 		.unwrap_or_default()

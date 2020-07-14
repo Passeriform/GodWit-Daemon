@@ -1,6 +1,6 @@
 # Maintainer: Utkarsh Bhardwaj (Passeriform) <passeriform.ub@gmail.com>
 pkgname=godwit-daemon
-pkgver=0.1.2
+pkgver=0.1.3
 pkgrel=1
 pkgdesc="A daemon runner for GodWit."
 arch=('x86_64' 'i686' 'armv6h' 'armv7h')

@@ -1,6 +1,7 @@
 //! Runner
 //!
 //! Defines a thread-runnable class. Contains list of runnable operations.
+use crate::errors::{NetworkError, RunError};
 use crate::{
 	config::*,
 	core::{Apps, Ops},
@@ -9,7 +10,6 @@ use crate::{
 };
 use log::debug;
 use serde::{Deserialize, Serialize};
-use std::error::Error;
 use std::sync::mpsc::channel;
 use std::thread;
 use std::time::Duration;
@@ -22,7 +22,7 @@ pub enum Regress {
 	Infinite,
 }
 
-pub fn init_daemon() -> Result<(), Box<dyn Error>> {
+pub fn init_daemon() -> Result<(), NetworkError> {
 	let pool = ThreadPool::new(get_config()?.max_threads);
 
 	let context = Context::new();
@@ -124,9 +124,9 @@ pub fn run(
 	application: Apps,
 	refresh: bool,
 	regress_counter: Regress,
-) -> Result<(), Box<dyn Error>> {
+) -> Result<(), RunError> {
 	if !daemon_running() {
-		init_daemon()
+		init_daemon().map_err(Into::into)
 	} else {
 		dispatcher::send(DispatchMsg {
 			proctype: HandleOps::Run,
@@ -139,7 +139,7 @@ pub fn run(
 	}
 }
 
-pub fn kill(func: Ops, application: Apps) -> Result<(), Box<dyn Error>> {
+pub fn kill(func: Ops, application: Apps) -> Result<(), RunError> {
 	dispatcher::send(DispatchMsg {
 		proctype: HandleOps::Kill,
 		func: Some(func),

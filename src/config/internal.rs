@@ -1,6 +1,6 @@
+use crate::errors::PatchError;
 use serde::Serialize;
 use std::convert::From;
-use std::error::Error;
 use std::fmt::Display;
 use std::io::Write;
 use std::process::Command;
@@ -10,7 +10,7 @@ use tempfile::NamedTempFile;
 pub fn diff<T: Display + From<String>, U: Display + From<String>>(
 	original: T,
 	changed: U,
-) -> Result<String, Box<dyn Error>>
+) -> Result<String, PatchError>
 where
 	T: Serialize,
 	U: Serialize,
@@ -38,7 +38,7 @@ where
 pub fn patch<T: Display + From<String>, U: Display + From<String>>(
 	original: T,
 	patch: U,
-) -> Result<String, Box<dyn Error>> {
+) -> Result<String, PatchError> {
 	let mut tmp_original = NamedTempFile::new()?;
 	tmp_original.write_all(original.to_string().as_bytes())?;
 

@@ -1,14 +1,16 @@
+pub mod errors;
+
+use crate::errors::TraceError;
 use crate::{config, core::Apps};
 use dirs;
 use glob::glob;
 use lz4::block::decompress;
 use serde_json::{self, Value};
-use std::error::Error;
 use std::fs::File;
 use std::io::{prelude::*, Seek, SeekFrom};
 use std::str;
 
-fn parse_jsonlz4(lz4file: &mut File) -> Result<Value, Box<dyn Error>> {
+fn parse_jsonlz4(lz4file: &mut File) -> Result<Value, errors::LZ4Error> {
 	// Skip 8 bytes for jsonlz4 type
 	lz4file.seek(SeekFrom::Start(8))?;
 
@@ -25,7 +27,7 @@ fn parse_jsonlz4(lz4file: &mut File) -> Result<Value, Box<dyn Error>> {
 	Ok(parsed)
 }
 
-pub fn trace(refresh: bool) -> Result<(), Box<dyn Error>> {
+pub fn trace(refresh: bool) -> Result<(), TraceError> {
 	let mozilla_profile_path = dirs::home_dir().unwrap().as_path().join(".mozilla/firefox");
 
 	for lz4path in glob(&format!(

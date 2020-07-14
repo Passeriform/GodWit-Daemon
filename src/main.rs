@@ -134,7 +134,7 @@ fn main() {
 			OpsEnum::Trace { application } => runner::kill(Ops::Trace, application),
 			OpsEnum::Split { application } => runner::kill(Ops::Trace, application),
 		},
-		_ => runner::init_daemon(),
+		_ => runner::init_daemon().map_err(Into::into),
 	};
 	println!("{:?}", result);
 }

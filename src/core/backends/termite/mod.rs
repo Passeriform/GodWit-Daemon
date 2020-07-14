@@ -1,11 +1,16 @@
+pub mod errors;
+
+use crate::errors::TraceError;
 use std::env;
-use std::error::Error;
 use std::fs::File;
 use std::path::PathBuf;
 
-pub fn trace(refresh: bool) -> Result<(), Box<dyn Error>> {
-	let histpath = env::var("HISTFILE")
-		.or_else(|_| Err("No HISTFILE variable set. Can't track shell state."))?;
+pub fn trace(refresh: bool) -> Result<(), TraceError> {
+	let histpath = env::var("HISTFILE").or_else(|_| {
+		Err(TraceError::Internal {
+			err_str: "No HISTFILE variable set. Can't track shell state.".to_string(),
+		})
+	})?;
 	let histfile = File::open(PathBuf::from(histpath))?;
 
 	if refresh {

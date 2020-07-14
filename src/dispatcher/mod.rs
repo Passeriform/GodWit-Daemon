@@ -1,3 +1,4 @@
+use crate::errors::NetworkError;
 use crate::{
 	config::*,
 	core::{Apps, Ops},
@@ -7,7 +8,6 @@ use crate::{
 use log::debug;
 use serde::{Deserialize, Serialize};
 use std::default::Default;
-use std::error::Error;
 use zmq::{self, Context, Message};
 
 #[derive(Serialize, Deserialize, Default)]
@@ -36,7 +36,7 @@ impl Default for ResponseMsg {
 	}
 }
 
-pub fn send(d_msg: DispatchMsg) -> Result<ResponseMsg, Box<dyn Error>> {
+pub fn send(d_msg: DispatchMsg) -> Result<ResponseMsg, NetworkError> {
 	let context = Context::new();
 	let requester = context.socket(zmq::REQ)?;
 
@@ -56,7 +56,7 @@ pub fn send(d_msg: DispatchMsg) -> Result<ResponseMsg, Box<dyn Error>> {
 	Ok(retmsg)
 }
 
-pub fn heartbeat() -> Result<ResponseMsg, Box<dyn Error>> {
+pub fn heartbeat() -> Result<ResponseMsg, NetworkError> {
 	// TODO: Define an early exit if daemon isn't running yet.
 	let context = Context::new();
 	let requester = context.socket(zmq::REQ)?;
