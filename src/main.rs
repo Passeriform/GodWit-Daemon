@@ -1,10 +1,53 @@
-use godwit_daemon::{
-	core::Apps,
-	core::Ops,
-	runner::{self, Regress},
-};
+use godwit_daemon::core::ExternalBackends;
+use godwit_daemon::core::Ops;
+use godwit_daemon::runner::{self, Regress};
 use simplelog::*;
 use structopt::{clap::Shell, StructOpt};
+
+use cargo_clone;
+use std::error::Error;
+use std::fs;
+use std::process::Command;
+use toml;
+use toml::map::Map;
+use toml::Value;
+
+#[macro_use]
+extern crate lazy_static;
+
+fn get_dylib_deps() -> Result<Map<String, Value>, Box<dyn Error>> {
+	let parsed_cargo_toml: Value = toml::from_str(&fs::read_to_string("Cargo.toml")?)?;
+
+	parsed_cargo_toml["runtime-cdylib-dependencies"]
+		.as_table()
+		.map_or_else(
+			|| Err("No array could be parsed.".into()),
+			|val| Ok(val.clone()),
+		)
+}
+
+lazy_static! {
+	static ref EXT_BACKENDS: Vec<String> = {
+		let mut end_vec = Vec::new();
+
+		for (dependency, version) in get_dylib_deps()
+			.expect("Dependencies couldn't be fetched.")
+			.into_iter()
+		{
+			cargo_clone::clone("crate", &dependency, version.as_str(), &[]);
+		}
+
+		for key in ExternalBackends::from_dir("lib/backends")
+			.unwrap()
+			.backends
+			.keys()
+		{
+			end_vec.push(key.to_string());
+		}
+
+		end_vec
+	};
+}
 
 // Define Config
 #[derive(Debug, StructOpt)]
@@ -68,12 +111,12 @@ enum OpsEnum {
 	/// Trace an application state
 	Trace {
 		/// Application name
-		application: Apps,
-	},
-	/// Split processess
-	Split {
-		/// Application name
-		application: Apps,
+		#[structopt(possible_values = &EXT_BACKENDS
+			.iter()
+			.map(|b| b.as_ref())
+			.collect::<Vec<&str>>()
+			.as_slice(), case_insensitive = true)]
+		application: String,
 	},
 }
 
@@ -116,25 +159,17 @@ fn main() {
 	let result = match config.ops_variant {
 		Some(OpsVariantEnum::New { operation, refresh }) => match operation {
 			OpsEnum::Trace { application } => {
-				runner::run(Ops::Trace, application, refresh, Regress::Once)
-			}
-			OpsEnum::Split { application } => {
-				runner::run(Ops::Split, application, refresh, Regress::Once)
+				runner::run(Ops::Trace, &application, refresh, Regress::Once)
 			}
 		},
 		Some(OpsVariantEnum::Regress { operation, refresh }) => match operation {
 			OpsEnum::Trace { application } => {
-				runner::run(Ops::Trace, application, refresh, Regress::Infinite)
-			}
-			OpsEnum::Split { application } => {
-				runner::run(Ops::Split, application, refresh, Regress::Infinite)
+				runner::run(Ops::Trace, &application, refresh, Regress::Infinite)
 			}
 		},
 		Some(OpsVariantEnum::Die { operation }) => match operation {
-			OpsEnum::Trace { application } => runner::kill(Ops::Trace, application),
-			OpsEnum::Split { application } => runner::kill(Ops::Trace, application),
+			OpsEnum::Trace { application } => runner::kill(Ops::Trace, &application),
 		},
 		_ => runner::init_daemon().map_err(Into::into),
 	};
-	println!("{:?}", result);
 }

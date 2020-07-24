@@ -24,7 +24,15 @@ custom_error! {pub RevisionError
 	Patch {source: PatchError} = "PatchError occured.",
 }
 
+custom_error! {pub BackendError
+	NotFound {backend_str: String} = "Backend {backend_str} not found.",
+	Glob {source: glob::GlobError} = "GlobError occured.",
+	VersionMismatch = "RUSTC_VERSION or CORE_VERSION mismatched.",
+	LibLoading {source: libloading::Error} = "Dynamic libloading threw unexpected error.",
+}
+
 custom_error! {pub TraceError
+	Backend {source: BackendError} = "Backend threw unexpected error.",
 	Internal {err_str: String} = "Backend threw custom error: {err_str}",
 	IO {source: std::io::Error} = "IO error occured.",
 	Glob {source: glob::GlobError} = "GlobError occured.",
@@ -34,16 +42,10 @@ custom_error! {pub TraceError
 	Revision {source: RevisionError} = "RevisionError occured.",
 }
 
-custom_error! {pub SplitError
-	Internal {err_str: String} = "Backend threw custom error: {err_str}",
-	Patch {source: PatchError} = "PatchError occured.",
-	Revision {source: RevisionError} = "RevisionError occured.",
-}
-
 custom_error! {pub DelegateError
 	PurgeBase {source: PurgeBaseError} = "PurgeBaseError occured.",
+	Backend {source: BackendError} = "BackendError occured.",
 	Trace {source: TraceError} = "TraceError occured.",
-	Split {source: SplitError} = "SplitError occured.",
 }
 
 custom_error! {pub NetworkError

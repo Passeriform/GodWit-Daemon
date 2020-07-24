@@ -1,6 +1,5 @@
 mod internal;
 
-use crate::core::Apps;
 use crate::errors::{PatchError, PurgeBaseError, RevisionError};
 use chrono::prelude::*;
 use getter_derive::Getter;
@@ -9,12 +8,9 @@ use log::info;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::fmt::Display;
+use std::fs::{self, File};
 use std::io::{self, prelude::*};
-use std::{
-	fs::{self, File},
-	path::Path,
-	path::PathBuf,
-};
+use std::path::{Path, PathBuf};
 
 /// Define godwit daemon config.
 #[derive(Debug, Deserialize, Serialize, Getter)]
@@ -46,11 +42,11 @@ impl Config {
 		}
 	}
 
-	pub fn get_base_path(&self, application: Apps, file_name: &str) -> Option<PathBuf> {
+	pub fn get_base_path(&self, application: &str, file_name: &str) -> Option<PathBuf> {
 		let base_path = self
 			.daemon_directory
 			.as_path()
-			.join(application.to_string())
+			.join(application)
 			.join(format!("{}.base", &file_name));
 
 		return if base_path.exists() {
@@ -63,13 +59,13 @@ impl Config {
 	/// Get patched revision for file of an application
 	pub fn get_patched_rev(
 		&self,
-		application: Apps,
+		application: &str,
 		file_name: &str,
 	) -> Result<Value, RevisionError> {
 		let base_path = self
 			.daemon_directory
 			.as_path()
-			.join(application.to_string())
+			.join(application)
 			.join(format!("{}.base", &file_name));
 
 		if !base_path.exists() {
@@ -102,7 +98,7 @@ impl Config {
 	// Save new patch files
 	pub fn save_patch_file<T>(
 		&self,
-		application: Apps,
+		application: &str,
 		file_name: &str,
 		patch_content: T,
 	) -> Result<(), PatchError>
@@ -187,7 +183,7 @@ pub fn get_config() -> Result<Config, io::Error> {
 }
 
 pub fn update_patches(
-	application: Apps,
+	application: &str,
 	file_path: &Path,
 	curr_instance: Value,
 ) -> Result<(), RevisionError> {
@@ -213,7 +209,7 @@ pub fn update_patches(
 	Ok(())
 }
 
-pub fn purge_base_file(application: Apps, file_path: &Path) -> Result<(), PurgeBaseError> {
+pub fn purge_base_file(application: &str, file_path: &Path) -> Result<(), PurgeBaseError> {
 	let file_name = file_path
 		.file_name()
 		.unwrap_or_default()

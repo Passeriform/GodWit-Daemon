@@ -1,13 +1,11 @@
 //! Runner
 //!
 //! Defines a thread-runnable class. Contains list of runnable operations.
+use crate::config::*;
+use crate::core::Ops;
+use crate::dispatcher::{self, DispatchMsg, ResponseMsg};
 use crate::errors::{NetworkError, RunError};
-use crate::{
-	config::*,
-	core::{Apps, Ops},
-	dispatcher::{self, DispatchMsg, ResponseMsg},
-	prochandler::{self, HandleOps},
-};
+use crate::prochandler::{self, HandleOps};
 use log::debug;
 use serde::{Deserialize, Serialize};
 use std::sync::mpsc::channel;
@@ -65,8 +63,6 @@ pub fn init_daemon() -> Result<(), NetworkError> {
 						}),
 					};
 
-					thread::sleep(Duration::from_millis(1000)); // Emulate processing
-
 					tx.send(retmsg.unwrap())
 						.expect("Channel blocked for the pool");
 				});
@@ -99,17 +95,17 @@ pub fn init_daemon() -> Result<(), NetworkError> {
 						0,
 					)
 					.expect("Error occured while sending return message.");
-				loop {
-					let tx = tx.clone();
-
-					pool.execute(move || {
-						let retmsg = prochandler::handle(proctype, func, application, refresh);
-
-						thread::sleep(Duration::from_millis(1000)); // Emulate processing
-
-						// TODO: Write concise retmsg stream to file.
-					});
-				}
+				// loop {
+				// 	let tx = tx.clone();
+				//
+				// 	pool.execute(move || {
+				// 		let retmsg = prochandler::handle(proctype, func, application, refresh);
+				//
+				// 		thread::sleep(Duration::from_millis(1000)); // Emulate processing
+				//
+				// 		// TODO: Write concise retmsg stream to file.
+				// 	});
+				// }
 			}
 		}
 	}
@@ -121,7 +117,7 @@ pub fn daemon_running() -> bool {
 
 pub fn run(
 	func: Ops,
-	application: Apps,
+	application: &str,
 	refresh: bool,
 	regress_counter: Regress,
 ) -> Result<(), RunError> {
@@ -131,7 +127,7 @@ pub fn run(
 		dispatcher::send(DispatchMsg {
 			proctype: HandleOps::Run,
 			func: Some(func),
-			application: Some(application),
+			application: Some(application.to_string().to_lowercase()),
 			refresh: refresh,
 			regress_counter: Some(regress_counter),
 		})?;
@@ -139,11 +135,11 @@ pub fn run(
 	}
 }
 
-pub fn kill(func: Ops, application: Apps) -> Result<(), RunError> {
+pub fn kill(func: Ops, application: &str) -> Result<(), RunError> {
 	dispatcher::send(DispatchMsg {
 		proctype: HandleOps::Kill,
 		func: Some(func),
-		application: Some(application),
+		application: Some(application.to_string()),
 		..Default::default()
 	})?;
 	Ok(())

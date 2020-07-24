@@ -1,10 +1,8 @@
+use crate::config::*;
+use crate::core::Ops;
 use crate::errors::NetworkError;
-use crate::{
-	config::*,
-	core::{Apps, Ops},
-	prochandler::HandleOps,
-	runner::Regress,
-};
+use crate::prochandler::HandleOps;
+use crate::runner::Regress;
 use log::debug;
 use serde::{Deserialize, Serialize};
 use std::default::Default;
@@ -14,7 +12,7 @@ use zmq::{self, Context, Message};
 pub struct DispatchMsg {
 	pub proctype: HandleOps,
 	pub func: Option<Ops>,
-	pub application: Option<Apps>,
+	pub application: Option<String>,
 	pub refresh: bool,
 	pub regress_counter: Option<Regress>,
 }

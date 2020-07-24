@@ -77,7 +77,7 @@ $ godwit-daemon die
 
 If you want to contribute, start by cloning this repository.
 ```bash
-    git clone https://github.com/Passeriform/GodWit Godwit-Daemon
+    git clone https://github.com/Passeriform/GodWit-Daemon Godwit-Daemon
 ```
 Checkout to a new branch.
 ```bash
