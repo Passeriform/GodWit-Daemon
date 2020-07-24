@@ -1,7 +1,7 @@
 [package]
 name = "godwit-daemon"
 description = "A daemon runner for GodWit."
-version = "0.1.3"
+version = "0.1.4"
 authors = ["Utkarsh Bhardwaj (Passeriform) <passeriform.ub@gmail.com>"]
 readme = "README.md"
 keywords = ["daemon", "runner", "tracker", "service", "internal"]
