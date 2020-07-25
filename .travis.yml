@@ -1,31 +1,24 @@
----
 language: rust
-
 sudo: required
-
 cache: cargo
-
 rust:
-  - stable
-  - beta
-  - nightly
-
+- stable
+- beta
+- nightly
 jobs:
   allow_failures:
-    - rust: nightly
+  - rust: nightly
   fast_finish: true
-
 addons:
   apt:
     packages:
-      - libcurl4-openssl-dev
-      - libzmq3-dev
-      - libelf-dev
-      - libdw-dev
-      - cmake
-      - gcc
-      - binutils-dev
-
+    - libcurl4-openssl-dev
+    - libzmq3-dev
+    - libelf-dev
+    - libdw-dev
+    - cmake
+    - gcc
+    - binutils-dev
 after_success: |
   wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
   tar xzf master.tar.gz &&
@@ -40,11 +33,9 @@ after_success: |
   for file in target/debug/godwit_daemon-*[^\.d]; do mkdir -p "target/cov/$(basename $file)"; kcov --exclude-pattern=/.cargo,/usr/lib --verify "target/cov/$(basename $file)" "$file"; done &&
   bash <(curl -s https://codecov.io/bash) &&
   echo "Uploaded code coverage"
-
-
 deploy:
   provider: cargo
   on:
     tags: true
   token:
-    secure: g97VmvTRk7ETxJBgDcnfqV3olwFCDbZyj1bEIss7ORbcwp4eyK1wUb4p02mqTBydtLcyXVIxWxN8Rh4PW1PtugHAA+9FvfhyqO74BqrC/Gak2u/YOpiqaCpuupDCp7o0OkvPGU0HV8StS/3uF+awTBOGo2uDAsaIX6JIQG02EsbTH0QeB0vuncf+f+CRSTA1Q+QEKAe1TvVNFYRQ3PpOY2E1lzMbTu80ISIgI8Ctimq15UbHxS3/qVEqlaeeYdNVJVcQZKG/Al59EQSRQsmBUedyAgdACAX9sznB2ndUxMkhRCLadLUNQ5Lzuh4IWFFwUFEhytULTey/lo1zBc2nYV8R/SeKuQLy24yjPJd31PXusjvU6EFRFRgXRknBfpIHHyENOTA2EUQ/sH3xUDuZxKehZ31bpptXLdMiLL8M+vcQKG3BZ+HRcizImnAzcwoM6l8Q/30am2vttCu0l9jKtGQ2u90IRxBl6CYXpkE/P3+PkJJSqjgaY5Ej065XOUWYbWD06mMCeuAAA9n14cryNVrTpuJi1ns5v1gcpOtPc0xSPwJaALrW3V/b4kbjKd/lssWr6M6uIq4VBRSWSRW+KKFqWmOicQttXb88PAsI2M68l8YaHASyYWpnkeBGLgU7CvtEcmVdj2zuvboTsvizWqBSHMqX9TOYG8YNSEEErvw=
+    secure: Rdjhz/ESJfk5uo4r9YY30DwyjwrGeMgJqWJ+exuIsx0iUtDKi4UK+CT45NeIxIE08D5xJKspm5g4PvePIcH/hMmMpmIu59josCQzi3hkiZ1M/AAxDr5S7n1gaNyslDpGfTjQfPcI2AGTdj4u2FUqyUughrey8NtrjW9PrjVjqVRblCuLlttnuDwYYLSte/t6fXyPjgCeiyJOHbQwnjPFnGFN0jLu7VULPDbeo6PaUmd1EHdlzvf2MhBvw95FyYQpskLZeWmrFDvRghayu6vBnk7Gao4sogxII9LUq9sKvV+M0zG8ICS/kgzGRYzxZ35sfl8ja3NF/dvmo4TKKRTHwioWBlmqlV4gwXK2CTJPuaX2wjMrEcPc40hVP+EBnHgc/ejtFBHVS5miKDm2U+QEJVK2hRPtjISrI+hxGKRFcUMZj8/Xe/c16vd/5Oo9xV0PfsuDWlIKj+h6h2rcs7nxiYW8NG1zNs/tfsvHLhf021XVy5W5qJyHv205WQKzKEDNVA4c2PQoCbrFSrIK0lvVE+4mVr43PojEafEmwmxICu/WqpZkiOcQ1Ta8Y9ySzNAkHSK+50DHcdO5qoP+NJIc5MjyRPC5cr6Xant2xfFUHiXF3H3w4pNI+qPC125BTSd3+JGURU0tjgYIRahV5pZyG4NYiybod4Qc5V5QJf8RFdk=
