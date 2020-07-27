@@ -65,7 +65,7 @@ _arguments "${_arguments_options[@]}" \
 '(-v --verbose)--quiet[Silence all output]' \
 '(-q --quiet)*-v[Debug mode]' \
 '(-q --quiet)*--verbose[Debug mode]' \
-':application -- Application name:(firefox)' \
+':application -- Application name:()' \
 && ret=0
 ;;
 (help)
@@ -119,7 +119,7 @@ _arguments "${_arguments_options[@]}" \
 '(-v --verbose)--quiet[Silence all output]' \
 '(-q --quiet)*-v[Debug mode]' \
 '(-q --quiet)*--verbose[Debug mode]' \
-':application -- Application name:(firefox)' \
+':application -- Application name:()' \
 && ret=0
 ;;
 (help)
@@ -169,7 +169,7 @@ _arguments "${_arguments_options[@]}" \
 '(-v --verbose)--quiet[Silence all output]' \
 '(-q --quiet)*-v[Debug mode]' \
 '(-q --quiet)*--verbose[Debug mode]' \
-':application -- Application name:(firefox)' \
+':application -- Application name:()' \
 && ret=0
 ;;
 (help)

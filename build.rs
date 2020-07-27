@@ -3,6 +3,7 @@
 // Until then parsing Cargo.toml using serde_toml
 use rustc_version;
 
+#[cfg(feature = "symbols")]
 fn main() {
 	let rustc_v = rustc_version::version().unwrap();
 	println!("cargo:rustc-env=RUSTC_VERSION={}", rustc_v);
@@ -11,4 +12,16 @@ fn main() {
 	println!("cargo:rerun-if-env-changed=CORE_VERSION");
 }
 
-// cargo build -q --lib --all-targets --all-features --release --out-dir
+#[cfg(not(feature = "symbols"))]
+mod dyn_compile;
+
+#[cfg(not(feature = "symbols"))]
+fn main() {
+	let rustc_v = rustc_version::version().unwrap();
+	println!("cargo:rustc-env=RUSTC_VERSION={}", rustc_v);
+
+	dyn_compile::compile("backends", "lib/backends");
+
+	println!("cargo:rerun-if-env-changed=RUSTC_VERSION");
+	println!("cargo:rerun-if-env-changed=CORE_VERSION");
+}

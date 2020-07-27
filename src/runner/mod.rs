@@ -9,8 +9,6 @@ use crate::prochandler::{self, HandleOps};
 use log::debug;
 use serde::{Deserialize, Serialize};
 use std::sync::mpsc::channel;
-use std::thread;
-use std::time::Duration;
 use threadpool::ThreadPool;
 use zmq::{self, Context, Message};
 

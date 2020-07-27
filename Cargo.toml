@@ -1,11 +1,11 @@
 [package]
 name = "godwit-daemon"
 description = "A daemon runner for GodWit."
-version = "0.1.4"
+version = "0.1.7"
 authors = ["Utkarsh Bhardwaj (Passeriform) <passeriform.ub@gmail.com>"]
 readme = "README.md"
 keywords = ["daemon", "runner", "tracker", "service", "internal"]
-categories = ["command-line-utilities", "asynchronous", "concurrency"]
+categories = ["command-line-utilities", "caching", "development-tools", "asynchronous", "concurrency"]
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/Passeriform/GodWit-Daemon"
 homepage = "https://www.passeriform.com/prod/GodWit/daemon"
@@ -35,7 +35,7 @@ path = "tests/tests.rs"
 
 [dependencies]
 chrono = "0.4.11"
-clap = { version = "2.33.1", default-features = false }
+clap = { version = "2.33.1", default-features = false}
 custom_error = "1.7.1"
 dirs = "2.0.2"
 getter-derive-rs = "1.0.1"
@@ -43,8 +43,6 @@ glob = "0.3.0"
 lazy_static = "1.4.0"
 libloading = "0.6.2"
 log = "0.4.8"
-lz4 = "1.23.1"
-rand = "0.7.3"
 serde = { version = "1.0.104", features = ["derive"] }
 serde_json = "1.0.48"
 simplelog = "0.7.6"
@@ -52,14 +50,20 @@ structopt = "0.3.14"
 structopt-derive = "0.4.7"
 tempfile = "3.1.0"
 threadpool = "1.8.1"
-unidiff = "0.3.3"
 zmq = "0.9.2"
 
-cargo-clone-crate = "0.1.2"
+[build-dependencies]
+flate2 = "1.0.16"
+glob = "0.3.0"
+rand = "0.7.3"
+rustc_version = "0.2.3"
+reqwest = { version = "0.10.7", features = ["blocking"] }
+serde = { version = "1.0.104", features = ["derive"] }
+tar = "0.4.29"
 toml = "0.5.6"
 
-[build-dependencies]
-rustc_version = "0.2.3"
+[features]
+symbols = []
 
-[runtime-cdylib-dependencies]
-gwd-backend-firefox = "0.1.0"
+[backends]
+# gwd-backend-firefox = "0.1.3"

@@ -4,38 +4,12 @@ use godwit_daemon::runner::{self, Regress};
 use simplelog::*;
 use structopt::{clap::Shell, StructOpt};
 
-use cargo_clone;
-use std::error::Error;
-use std::fs;
-use std::process::Command;
-use toml;
-use toml::map::Map;
-use toml::Value;
-
 #[macro_use]
 extern crate lazy_static;
-
-fn get_dylib_deps() -> Result<Map<String, Value>, Box<dyn Error>> {
-	let parsed_cargo_toml: Value = toml::from_str(&fs::read_to_string("Cargo.toml")?)?;
-
-	parsed_cargo_toml["runtime-cdylib-dependencies"]
-		.as_table()
-		.map_or_else(
-			|| Err("No array could be parsed.".into()),
-			|val| Ok(val.clone()),
-		)
-}
 
 lazy_static! {
 	static ref EXT_BACKENDS: Vec<String> = {
 		let mut end_vec = Vec::new();
-
-		for (dependency, version) in get_dylib_deps()
-			.expect("Dependencies couldn't be fetched.")
-			.into_iter()
-		{
-			cargo_clone::clone("crate", &dependency, version.as_str(), &[]);
-		}
 
 		for key in ExternalBackends::from_dir("lib/backends")
 			.unwrap()
