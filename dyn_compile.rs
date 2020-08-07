@@ -2,45 +2,11 @@
 
 use flate2::read::GzDecoder;
 use glob::glob;
-use rand::distributions::Alphanumeric;
-use rand::{thread_rng, Rng};
 use std::error::Error;
-use std::{env, fs, iter, path, process};
+use std::{env, fs, path, process};
 use tar::Archive;
+use tempfile::tempdir;
 use toml::Value;
-
-struct BuildDir {
-	pub path: path::PathBuf,
-}
-
-impl BuildDir {
-	fn new() -> Self {
-		let mut rng = thread_rng();
-
-		let hex_str: String = iter::repeat(())
-			.map(|()| rng.sample(Alphanumeric))
-			.take(6)
-			.collect();
-
-		let mut dir = env::temp_dir();
-		dir.push(format!("dyn-build-{}", hex_str));
-
-		BuildDir { path: dir }
-	}
-}
-
-impl Drop for BuildDir {
-	fn drop(&mut self) {
-		// some paranoia before running 'rm -rf'
-		assert!(self.path.starts_with(env::temp_dir()));
-
-		println!("Removing build crate staging dir: {}", self.path.display());
-		fs::remove_dir_all(&self.path).expect(&format!(
-			"Couldn't clean up build dir: {}",
-			self.path.display()
-		));
-	}
-}
 
 struct Dependency {
 	name: String,
@@ -75,7 +41,7 @@ fn build_fetched_crate(
 	crate_src: &path::Path, // /tmp/...
 	path: &str,             // ENV PATH
 ) -> Result<(), Box<dyn Error>> {
-	let res = process::Command::new(env::var("CARGO")?)
+	let res = process::Command::new("cargo")
 		.args(&["build", "--release"])
 		.env_clear()
 		.env("PATH", path)
@@ -98,7 +64,7 @@ pub fn compile(custom_head_name: &str, lib_path: &str) {
 	// Bootstrap
 	let path = env::var("PATH").expect("Can't get PATH from env");
 
-	let base_dir = env::var("PWD").expect("Can't get PWD from env");
+	let base_dir = env::current_dir().expect("Can't get CD from env");
 	let base_dir = path::Path::new(&base_dir);
 
 	let lib_path = &base_dir.join(lib_path);
@@ -119,15 +85,11 @@ pub fn compile(custom_head_name: &str, lib_path: &str) {
 			continue;
 		}
 
-		let external_lib_dir = BuildDir::new();
-		let lib_so_search_path = external_lib_dir
-			.path
-			.join(format!("{}-{}", &dependency.name, &dependency.version));
+		let external_lib_dir = tempdir().expect("Couldn't create temp build dir.");
 
-		fs::create_dir(&external_lib_dir.path).expect(&format!(
-			"Couldn't create temp build dir at {}",
-			external_lib_dir.path.display()
-		));
+		let lib_so_search_path = external_lib_dir
+			.path()
+			.join(format!("{}-{}", &dependency.name, &dependency.version));
 
 		// Fetch backend from crates.io
 		let crate_url = format!(
@@ -144,7 +106,7 @@ pub fn compile(custom_head_name: &str, lib_path: &str) {
 		// Unpack the .tar.gz archive
 		let gz = GzDecoder::new(body.as_slice());
 		let mut tar = Archive::new(gz);
-		tar.unpack(&external_lib_dir.path)
+		tar.unpack(&external_lib_dir.path())
 			.expect("Unpacking tar threw error.");
 
 		build_fetched_crate(&lib_so_search_path, &path)
@@ -163,5 +125,7 @@ pub fn compile(custom_head_name: &str, lib_path: &str) {
 				);
 			}
 		}
+
+		external_lib_dir.close().expect("Couldn't remove temporary build directory.");
 	}
 }

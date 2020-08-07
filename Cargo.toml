@@ -38,7 +38,7 @@ chrono = "0.4.11"
 clap = { version = "2.33.1", default-features = false}
 custom_error = "1.7.1"
 dirs = "2.0.2"
-getter-derive-rs = "1.0.1"
+getter-derive-rs = "1.0.2"
 glob = "0.3.0"
 lazy_static = "1.4.0"
 libloading = "0.6.2"
@@ -60,9 +60,11 @@ rustc_version = "0.2.3"
 reqwest = { version = "0.10.7", features = ["blocking"] }
 serde = { version = "1.0.104", features = ["derive"] }
 tar = "0.4.29"
+tempfile = "3.1.0"
 toml = "0.5.6"
 
 [features]
+docs-rs = []
 symbols = []
 
 [backends]

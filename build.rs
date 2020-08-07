@@ -3,7 +3,7 @@
 // Until then parsing Cargo.toml using serde_toml
 use rustc_version;
 
-#[cfg(feature = "symbols")]
+#[cfg(any(feature = "symbols", feature = "docs-rs"))]
 fn main() {
 	let rustc_v = rustc_version::version().unwrap();
 	println!("cargo:rustc-env=RUSTC_VERSION={}", rustc_v);
@@ -12,10 +12,10 @@ fn main() {
 	println!("cargo:rerun-if-env-changed=CORE_VERSION");
 }
 
-#[cfg(not(feature = "symbols"))]
+#[cfg(all(not(feature = "symbols"), not(feature = "docs-rs")))]
 mod dyn_compile;
 
-#[cfg(not(feature = "symbols"))]
+#[cfg(all(not(feature = "symbols"), not(feature = "docs-rs")))]
 fn main() {
 	let rustc_v = rustc_version::version().unwrap();
 	println!("cargo:rustc-env=RUSTC_VERSION={}", rustc_v);
