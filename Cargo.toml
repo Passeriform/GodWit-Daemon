@@ -67,5 +67,8 @@ toml = "0.5.6"
 docs-rs = []
 symbols = []
 
+[package.metadata.docs.rs]
+features = ["docs-rs"]
+
 [backends]
 gwd-backend-firefox = "0.1.4"
