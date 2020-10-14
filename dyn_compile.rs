@@ -43,7 +43,6 @@ fn build_fetched_crate(
 ) -> Result<(), Box<dyn Error>> {
 	let res = process::Command::new("cargo")
 		.args(&["build", "--release"])
-		.env_clear()
 		.env("PATH", path)
 		.current_dir(&crate_src)
 		.stdout(process::Stdio::inherit())
