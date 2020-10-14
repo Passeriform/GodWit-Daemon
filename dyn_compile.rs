@@ -111,17 +111,19 @@ pub fn compile(custom_head_name: &str, lib_path: &str) {
 		build_fetched_crate(&lib_so_search_path, &path)
 			.expect(&format!("Build for backend {:?} failed", &dependency.name));
 
-		for entry in glob(&format!("{}/target/*/*.so", &lib_so_search_path.display()))
-			.expect("Failed to parse glob pattern")
-		{
-			if let Ok(cdylib) = entry {
-				fs::copy(&cdylib, &lib_path.join(&format!("{}.so", dependency.name))).expect(
-					&format!(
-						"Copying dynamic library was unsuccessful. src: {}, dst: {}",
-						&cdylib.display(),
-						&lib_path.join(&dependency.name).display()
-					),
-				);
+		for dynamic_extension in &[ "so", "dll", "lib", "rlib", "d" ] {
+			for entry in glob(&format!("{}/target/*/*.{}", &lib_so_search_path.display(), dynamic_extension))
+				.expect("Failed to parse glob pattern")
+			{
+				if let Ok(cdylib) = entry {
+					fs::copy(&cdylib, &lib_path.join(&format!("{}.{}", dependency.name, dynamic_extension))).expect(
+						&format!(
+							"Copying dynamic library was unsuccessful. src: {}, dst: {}",
+							&cdylib.display(),
+							&lib_path.join(&dependency.name).display()
+						),
+					);
+				}
 			}
 		}
 
